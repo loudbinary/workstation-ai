@@ -1,0 +1,32 @@
+version: '3'
+
+tasks:
+  terraform:fmt:
+    desc: Format all Terraform files under infra/terraform.
+    cmds:
+      - terraform fmt -recursive infra/terraform
+
+  terraform:fmt-check:
+    desc: Check Terraform formatting under infra/terraform.
+    cmds:
+      - terraform fmt -check -recursive -diff infra/terraform
+
+  ci:act:terraform-fmt:
+    desc: Run the terraform-fmt GitHub Actions job locally with act.
+    cmds:
+      - act pull_request -W .github/workflows/ci.yml -j terraform-fmt
+
+  ci:act:plan:kubernetes:
+    desc: Run workflow_dispatch with the kubernetes build plan.
+    cmds:
+      - act workflow_dispatch -W .github/workflows/ci.yml -e .github/events/workflow_dispatch-kubernetes.json
+
+  ci:act:plan:github-platform:
+    desc: Run workflow_dispatch with the github-platform build plan.
+    cmds:
+      - act workflow_dispatch -W .github/workflows/ci.yml -e .github/events/workflow_dispatch-github-platform.json
+
+  apps:scan:run:
+    desc: Scan apps, require .envrc, optionally require app workflow, then execute build-plan workflows with direnv vars.
+    cmds:
+      - scripts/apps/scan-and-run.sh

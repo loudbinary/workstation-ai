@@ -1,0 +1,10 @@
+{
+  "ref": "refs/heads/main",
+  "inputs": {
+    "build_plan": "kubernetes",
+    "environment": "dev",
+    "deploy_kubernetes": "true",
+    "deploy_codespaces": "false",
+    "deploy_spark": "false"
+  }
+}

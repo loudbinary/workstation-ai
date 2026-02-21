@@ -1,0 +1,10 @@
+{
+  "ref": "refs/heads/main",
+  "inputs": {
+    "build_plan": "github-platform",
+    "environment": "dev",
+    "deploy_kubernetes": "false",
+    "deploy_codespaces": "true",
+    "deploy_spark": "true"
+  }
+}
