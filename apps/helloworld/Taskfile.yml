@@ -1,0 +1,7 @@
+version: '3'
+
+tasks:
+  run:
+    desc: Print all environment variables visible in the app direnv context.
+    cmds:
+      - direnv exec . bash -lc 'env | sort'

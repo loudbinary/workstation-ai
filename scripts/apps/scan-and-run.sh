@@ -22,9 +22,12 @@ case "$BUILD_PLAN" in
     ;;
 esac
 
-for command in direnv task; do
+for command in direnv task act; do
   if ! command -v "$command" >/dev/null 2>&1; then
     echo "Missing required command: ${command}"
+    if [[ "$command" == "act" ]]; then
+      echo "Install with: brew install act"
+    fi
     exit 1
   fi
 done
@@ -71,6 +74,13 @@ for app_dir in "${APP_DIRS[@]}"; do
       failures=$((failures + 1))
       continue
     fi
+  fi
+
+  echo "[INFO] direnv variables for ${app_name}:"
+  if ! direnv exec "$app_dir" bash -lc 'env | sort'; then
+    echo "[FAIL] Unable to read direnv environment for ${app_name}"
+    failures=$((failures + 1))
+    continue
   fi
 
   if ! direnv exec "$app_dir" bash -lc "cd '$ROOT_DIR' && APP_NAME='$app_name' APP_DIR='$app_dir' BUILD_PLAN='$BUILD_PLAN' TARGET_ENV='$TARGET_ENV' task $TASK_NAME"; then

@@ -1,0 +1,11 @@
+name: App Local Validation
+
+on:
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Placeholder
+        run: echo "App-local workflow file exists for scanner validation."
